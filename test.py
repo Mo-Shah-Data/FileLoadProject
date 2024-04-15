@@ -90,6 +90,11 @@ with gzip.open("k.json.gz","rt") as f:
             break
 
         try:
+            json_data = json_doc_stream + '"000":"test"}]}]}'
+            json_complete_doc = json.loads(json_data)
+
+
+        try:
             json_complete_doc = json.loads(json_doc_stream)
             print("complete json doc ")
             print(json_complete_doc)
