@@ -66,11 +66,7 @@ print(exec_time_3) # seems to be the quickest
 
 
 ## Next step we need to get some of the json data into a dict format for examination
-
-import json
-
-all_data = all_data.encode("utf-8")
-resp = json.loads()
+# This is a sample of the complete json available, enough to create a json doc
 
 # the above didn't work hence need to try incrementally until complete json doc is found
 import gzip
@@ -93,21 +89,27 @@ with gzip.open("k.json.gz","rt") as f:
             json_data = json_doc_stream + '"000":"test"}]}]}'
             json_complete_doc = json.loads(json_data)
 
-
-        try:
-            json_complete_doc = json.loads(json_doc_stream)
-            print("complete json doc ")
-            print(json_complete_doc)
-
         except json.JSONDecodeError:
             continue
 
+# write file to access structure in json viewer
+with open("data_file.json", "w") as write_file:
+    json.dump(json_complete_doc, write_file)
 
-## still unable to get a complete json doc
+
+for k,v in json_complete_doc.items():
+    # print(k)
+
+if json_complete_doc["in_network"]:
+    print(json_complete_doc["in_network"])
 
 
 
+# Now to extract "in_network"
 
+json_full_doc = json.dumps(x)
+
+# Testing area
 test_string = '[Test]'
 ''.join(test_string)
 
