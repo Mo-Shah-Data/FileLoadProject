@@ -73,23 +73,27 @@ all_data = all_data.encode("utf-8")
 resp = json.loads()
 
 # the above didn't work hence need to try incrementally until complete json doc is found
-
+import gzip
 import json
 with gzip.open("k.json.gz","rt") as f:
-    json_doc_stream = ""
-    doc_count = 0
-    while doc_count <= 2:
-        json_data = f.read(4096)
-        if not json_data:
-            break
-        json_doc_stream += json_data
+    x = f.readlines()
+    # variable is too big to use json.dumps() also having memeory issues
 
+    json_doc_stream = ''
+    chunk_count = 0
+    while chunk_count < 7:
+        #print(x[chunk_count])
+        json_doc_stream += x[chunk_count]
+        chunk_count += 1
+
+        if not json_doc_stream:
+            break
 
         try:
             json_complete_doc = json.loads(json_doc_stream)
             print("complete json doc ")
             print(json_complete_doc)
-            doc_count += 1
+
         except json.JSONDecodeError:
             continue
 
@@ -99,3 +103,9 @@ with gzip.open("k.json.gz","rt") as f:
 
 
 
+test_string = '[Test]'
+''.join(test_string)
+
+my_list = ['apple', 'banana', 'orange']
+result = 'e '.join(my_list)
+print(result)
