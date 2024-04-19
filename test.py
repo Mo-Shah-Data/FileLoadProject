@@ -103,6 +103,9 @@ for k,v in json_complete_doc.items():
 if json_complete_doc["in_network"]:
     print(json_complete_doc["in_network"])
 
+# Time to test generators
+
+
 
 
 # Now to extract "in_network"
