@@ -5,16 +5,22 @@ import json
 from collections import deque
 
 pattern = """{"rep"""
-
+pattern2 = """{"rep"""
 # Testing
-# out = search(character="""{"rep""", pattern="""{"rep""", history=5)
+# out = search(character="""{"r""", pattern="""{"rep""", history=5)
+# ''.join(out) # success
 
-def search(character, pattern, history=5):
-    previous_chars = deque(maxlen=history)
+def search(character, pattern):
     if character in pattern:
         previous_chars.append(character)
         if pattern in ''.join(previous_chars):
             yield pattern
+
+previous_chars = deque(maxlen=5)
+for item in pattern2:
+    out = search(character=item, pattern="""{"rep""")
+
+
 
 RECORD_SIZE = 1
 
@@ -25,7 +31,7 @@ with gzip.open("k.json.gz","rt") as f:
         try:
             character = next(record)
             #print(character)
-            output = ''.join(search(character,pattern,history=5))
+            output = ''.join(search(character,pattern))
             if output == pattern:
                 print(output)
 
