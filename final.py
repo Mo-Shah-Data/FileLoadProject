@@ -4,34 +4,36 @@ import time
 import json
 from collections import deque
 
-pattern = """{"rep"""
-pattern2 = """{"rep"""
+pattern = """{"provider"""
+# pattern2 = """{"rep"""
 # Testing
 # out = search(character="""{"r""", pattern="""{"rep""", history=5)
 # ''.join(out) # success
 
-def search(character, pattern):
+def initial_search(character, pattern):
     if character in pattern:
         previous_chars.append(character)
         if pattern in ''.join(previous_chars):
             yield pattern
 
-previous_chars = deque(maxlen=5)
-for item in pattern2:
-    out = search(character=item, pattern="""{"rep""")
+# previous_chars = deque(maxlen=5)
+# for item in pattern2:
+#     out = search(character=item, pattern="""{"rep""")
 
-
+# def post_initial_search():
+#     continue
 
 RECORD_SIZE = 1
 
 with gzip.open("k.json.gz","rt") as f:
     record = iter(partial(f.read, RECORD_SIZE), b'')
-    # text = f.read()
-    for _ in range(25):
+    previous_chars = deque(maxlen=10) # unbound with no maxlen
+
+    for _ in range(2500):
         try:
             character = next(record)
             #print(character)
-            output = ''.join(search(character,pattern))
+            output = ''.join(initial_search(character,pattern))
             if output == pattern:
                 print(output)
 
